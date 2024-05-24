@@ -4,24 +4,64 @@ const $clear = document.querySelector('#clear');
 const $plusmn = document.querySelector('#plusmn');
 const $percent = document.querySelector('#percent');
 
-const $divide = document.querySelector('#divide');
-const $multiply = document.querySelector('#multiply');
-const $minus = document.querySelector('#minus');
-const $plus = document.querySelector('#plus');
+const $operatorButtons = Array.from(document.querySelectorAll('.calculator-operator-buttons'));
 const $calculate = document.querySelector('#calculate');
 
-const $num0 = document.querySelector('#num-0');
-const $num1 = document.querySelector('#num-1');
-const $num2 = document.querySelector('#num-2');
-const $num3 = document.querySelector('#num-3');
-const $num4 = document.querySelector('#num-4');
-const $num5 = document.querySelector('#num-5');
-const $num6 = document.querySelector('#num-6');
-const $num7 = document.querySelector('#num-7');
-const $num8 = document.querySelector('#num-8');
-const $num9 = document.querySelector('#num-9');
-const $dot = document.querySelector('#dot');
+const $numButtons = Array.from(document.querySelectorAll('.calculator-num-buttons'));
 
 let operand1 = '';
 let operand2 = '';
 let operator = '';
+
+const onClickButton = (value) => () => {
+    $result.value = '';
+    if (!operator) {
+        operand1 += value;
+        $result.value = operand1;
+    } else {
+        operand2 += value;
+        $result.value = operand2;
+    }
+}
+
+const onClickOperatorButton = (op) => () => {
+    operator = op;
+}
+
+$numButtons.forEach(button => {
+    button.addEventListener('click', onClickButton(button.textContent))
+})
+
+$operatorButtons.forEach(button => {
+    if (button === $calculate) return;
+    button.addEventListener('click', onClickOperatorButton(button.textContent))
+})
+
+$calculate.addEventListener('click', () => {
+    if (!operator) {
+        return;
+    }
+    if (!operand2) {
+        alert('숫자를 먼저 입력하세요.');
+        return;
+    }
+    switch (operator) {
+        case '÷':
+            operand1 /= operand2;
+            break;
+        case '×':
+            operand1 *= operand2;
+            break;
+        case '−':
+            operand1 -= operand2;
+            break;
+        case '+':
+            operand1 = Number(operand1) + Number(operand2);
+            break;
+        default:
+            alert('계산할 수 없습니다.');
+    }
+    $result.value = operand1;
+    operand2 = '';
+    operator = ''
+})
