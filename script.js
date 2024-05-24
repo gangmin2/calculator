@@ -25,6 +25,10 @@ const onClickButton = (value) => () => {
 }
 
 const onClickOperatorButton = (op) => () => {
+    if (!operand1) {
+        alert('숫자를 먼저 입력하세요.');
+        return;
+    }
     operator = op;
 }
 
@@ -62,6 +66,7 @@ $calculate.addEventListener('click', () => {
             alert('계산할 수 없습니다.');
     }
     $result.value = operand1;
+    operand1 = String(operand1);
     operand2 = '';
     operator = ''
 })
@@ -71,4 +76,22 @@ $clear.addEventListener('click', () => {
     operand2 = '';
     operator = '';
     $result.value = 0;
+})
+
+$plusmn.addEventListener('click', () => {
+    if (!operator) {
+        if (operand1 === '') {
+            operand1 = '-'
+        } else {
+            operand1 *= -1;
+        }
+        $result.value = operand1;
+    } else {
+        if (operand2 === '') {
+            operand2 = '-'
+        } else {
+            operand2 *= -1;
+        }
+        $result.value = operand2;
+    }
 })
