@@ -13,7 +13,7 @@ let operand1 = '';
 let operand2 = '';
 let operator = '';
 
-const onClickButton = (value) => () => {
+const onClickNumberButton = (value) => () => {
     $result.value = '';
     if (!operator) {
         operand1 += value;
@@ -29,11 +29,33 @@ const onClickOperatorButton = (op) => () => {
         alert('숫자를 먼저 입력하세요.');
         return;
     }
+    if (operand1 && operand2) {
+        switch (operator) {
+            case '÷':
+                operand1 /= operand2;
+                break;
+            case '×':
+                operand1 *= operand2;
+                break;
+            case '−':
+                operand1 -= operand2;
+                break;
+            case '+':
+                operand1 = Number(operand1) + Number(operand2);
+                break;
+            default:
+                alert('계산할 수 없습니다.');
+        }
+
+        $result.value = operand1;
+        operand1 = String(operand1);
+        operand2 = '';
+    }
     operator = op;
 }
 
 $numButtons.forEach(button => {
-    button.addEventListener('click', onClickButton(button.textContent))
+    button.addEventListener('click', onClickNumberButton(button.textContent))
 })
 
 $operatorButtons.forEach(button => {
@@ -104,8 +126,8 @@ $percent.addEventListener('click', () => {
         $result.value = operand1;
     } else {
         if (operand2 === '') return;
-        
-        operand2 = String(operand2/ 100);
+
+        operand2 = String(operand2 / 100);
         $result.value = operand2;
     }
 })
