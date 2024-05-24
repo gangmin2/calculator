@@ -65,3 +65,10 @@ $calculate.addEventListener('click', () => {
     operand2 = '';
     operator = ''
 })
+
+$clear.addEventListener('click', () => {
+    operand1 = '';
+    operand2 = '';
+    operator = '';
+    $result.value = 0;
+})
