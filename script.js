@@ -95,3 +95,17 @@ $plusmn.addEventListener('click', () => {
         $result.value = operand2;
     }
 })
+
+$percent.addEventListener('click', () => {
+    if (!operator) {
+        if (operand1 === '') return;
+
+        operand1 = String(operand1 / 100);
+        $result.value = operand1;
+    } else {
+        if (operand2 === '') return;
+        
+        operand2 = String(operand2/ 100);
+        $result.value = operand2;
+    }
+})
